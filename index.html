@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Automation Agency & SaaS Contract Pricing Engine</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e293b;
+            --primary: #f8fafc;
+            --accent: #38bdf8;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(248, 250, 252, 0.03);
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .ad-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            min-height: 60px;
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            overflow: hidden;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 14px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        input[type="number"] {
+            padding-left: 30px;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: var(--accent);
+        }
+
+        .results-box {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .result-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .result-value.highlight {
+            color: var(--accent);
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        #sticky-bottom-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #0f172a;
+            border-top: 1px solid var(--border-color);
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AI Agency Pricing Matrix</h1>
+        <p class="subtitle">Calculate professional B2B AI solution setup fees and monthly retainers</p>
+
+        <div id="monetag-banner-top" class="ad-container"></div>
+
+        <div class="input-group">
+            <label for="complexity-tier">AI Pipeline Workflow Complexity</label>
+            <select id="complexity-tier" onchange="calculateAIAgencyPrice()">
+                <option value="800">Basic Chatbot Custom Prompting Base ($800 Setup)</option>
+                <option value="2500" selected>Multi-Agent Autonomous Workflow Automation ($2,500 Setup)</option>
+                <option value="6000">Enterprise Database Vector Embeddings & Fine-Tuning ($6,000 Setup)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="integrations-count">Number of Internal Software Integrations (APIs)</label>
+            <input type="number" id="integrations-count" value="4" oninput="calculateAIAgencyPrice()">
+        </div>
+
+        <div class="input-group">
+            <label for="token-hosting-retainer">Monthly Infrastructure API Retainer Target</label>
+            <div class="input-wrapper">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="token-hosting-retainer" value="450" oninput="calculateAIAgencyPrice()">
+            </div>
+        </div>
+
+        <div class="results-box">
+            <div class="result-row">
+                <span class="result-label">Base Integration Build Surcharge:</span>
+                <span class="result-value" id="integration-surcharge">$0.00</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Total Customized Setup Quote:</span>
+                <span class="result-value" id="total-setup-quote" style="color: var(--primary);">$0.00</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Suggested Monthly AI Support Retainer:</span>
+                <span class="result-value" id="final-retainer" style="color: #4ade80;">$0.00/mo</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Total 12-Month Contract Lifetime Value:</span>
+                <span class="result-value highlight" id="contract-ltv">$0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="sticky-bottom-container">
+        <div id="monetag-banner-bottom" style="width:100%; max-width:468px; min-height:60px; text-align:center;"></div>
+    </div>
+
+    <script>
+        function calculateAIAgencyPrice() {
+            const complexityBase = parseFloat(document.getElementById('complexity-tier').value) || 0;
+            const integrations = parseFloat(document.getElementById('integrations-count').value) || 0;
+            const baseRetainer = parseFloat(document.getElementById('token-hosting-retainer').value) || 0;
+
+            const integrationSurcharge = integrations * 350;
+            const totalSetupQuote = complexityBase + integrationSurcharge;
+            
+            // Retainer scales with setup scale for support complexity
+            const finalRetainer = baseRetainer + (totalSetupQuote * 0.10);
+            const contractLtv = totalSetupQuote + (finalRetainer * 12);
+
+            document.getElementById('integration-surcharge').innerText = "$" + integrationSurcharge.toFixed(2);
+            document.getElementById('total-setup-quote').innerText = "$" + totalSetupQuote.toFixed(2);
+            document.getElementById('final-retainer').innerText = "$" + finalRetainer.toFixed(2) + "/mo";
+            document.getElementById('contract-ltv').innerText = "$" + contractLtv.toFixed(2);
+        }
+        window.onload = function() { calculateAIAgencyPrice(); };
+    </script>
+
+    <script type="text/javascript">
+        (function(s,u,z,p){s.src=u;s.setAttribute('data-zone',z);p.appendChild(s);})(document.createElement('script'),'https://zovidree.com||document.documentElement);
+    </script>
+    <script type="text/javascript">
+        (function(s,u,z,p){s.src=u;s.setAttribute('data-zone',z);p.appendChild(s);})(document.createElement('script'),'https://zovidree.com||document.documentElement);
+    </script>
+</body>
+</html>
